@@ -3,37 +3,35 @@
 <head>
   <title>Map</title>
   <link rel="stylesheet" type="text/css" href="css/style.css">
-  <script src="javascript/app.js"></script>
-  <script src="javascript/Knockout.js"></script>
+    
 </head>
 
 <body>
 <div id="container">
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <div  data-bind="foreach: locations"> 
-    <input data-bind="value: input, valueUpdate: 'afterkeydown'" />
-  <ul>
-    <il>
-      <b data-bind="text: title"></b>
+  <div > 
+    <input  placeholder ="Search" data-bind="value: input, valueUpdate: 'afterkeydown'" />
+  <ul data-bind="foreach: filteredLocations">
+    <il data-bind="text: title, click:$root.markerClicked">
     </il>
   </ul>
 </div>
  </div>
- <div data-bind="foreach: locations"> 
-  <ul>
-    <il></il>
-  </ul>
-</div>
-</div>
 <div id="map"></div>
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
 </div>
+
 </div>
 
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfHUmj4jn64EKUbmrePynhtadmwnxUbyw&v=3&callback=initMap">
+
     </script>
-    
+
+    <script src="javascript/jquery-3.2.1.js"></script>
+    <script src="javascript/Knockout.js"></script>
+  <script src="javascript/app.js"></script>
+
   </body>
 </html>
