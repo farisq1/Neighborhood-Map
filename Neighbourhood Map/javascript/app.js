@@ -48,7 +48,7 @@
           
 
           
-              };
+              }
         }
         
       
@@ -82,7 +82,7 @@
 })
   		.fail (function(){
   			alert("Error failed to generate API");
-  		})
+  		});
   			
          
           // Make sure the marker property is cleared if the infowindow is closed.
@@ -116,7 +116,7 @@
 
     };
   
-    };
+    }
    
  // function forSquare (marker , infowindow){
    			
