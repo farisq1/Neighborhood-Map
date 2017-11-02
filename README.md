@@ -9,4 +9,11 @@
 
 
 
+## Resources
+## https://stackoverflow.com/questions/29589730/how-to-filter-google-map-markers-with-knockout-js
+## https://www.w3schools.com/
+## https://developer.foursquare.com/
+## http://knockoutjs.com
+## www.udacity.com (Live Help)
+
 ## Thank you.
