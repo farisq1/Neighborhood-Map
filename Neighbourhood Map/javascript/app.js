@@ -30,25 +30,28 @@
             position: position,
             id: locations[i].id,
             title: title,
-            animation: google.maps.Animation.DROP
+            animation: google.maps.Animation.DROP,
+        
             
           });
           // Push the marker to our array of markers.
           bounds.extend(marker.position);
 
           markers.push(marker);
+
          //locations[i].location = marker;
            marker.addListener('click', function() {
             populateInfoWindow(this, largeInfowindow);
-          });
-           marker.addListener('click', function() {
-
-          this.setAnimation(google.maps.Animation.BOUNCE);
+            this.setAnimation(google.maps.Animation.BOUNCE);
             
-              });
+          });
+          
+
+          
+              };
         }
         
-      }    
+      
 
        
 
@@ -56,30 +59,32 @@
         // Check to make sure the infowindow is not already opened on this marker.
         if (infowindow.marker != marker) {
           infowindow.marker = marker;
-             var clientId = 'KHARCC5ZFU3J0C5E2ZKKWYXGYEYJ152G1TWQAIFSC5IJKXUB';
+          var name , address;
+           var clientId = 'KHARCC5ZFU3J0C5E2ZKKWYXGYEYJ152G1TWQAIFSC5IJKXUB';
   			var clientSecret = 'Y1RKB2UB4AODF0M3ONAH2MNK3KEJEEBTMRAK2NMHQ2WDGN0N';
   			var version = '20172510';
-  			var forSquareUrl = 'https://api.foursquare.com/v2/venues/search?ll=' + marker.id + 'client_id=' + clientId + '&client_secret='+ clientSecret + '&v=' + version;
+  			var venueID = marker.id;
+
+   		var forSquareUrl = 'https://api.foursquare.com/v2/venues/search?v='+  version + '&ll=' + marker.position.lat() + ',' + marker.position.lng() + '&intent=checkin&'+  '&client_id=' + clientId + '&client_secret=' + clientSecret;  
+   		$.ajax({
+  		url:forSquareUrl,
+  		dataType: 'json'
+  		})
 
 
-  	$.ajax({
-  		url:forSquareUrl
-
-  		}).done(function(data){
+  		.done(function(data){
   			console.log(data);
-  			var address = data.response.venue.location.address;
-  			var name = data.response.venue.name;
-			infoWindow.setContent('<h3>' + marker.title + '/' + name + '</h3>' + '<p>' + address + '</p>');
-  			infoWindow.open(map, marker);
+  			name = data.response.venues[0].name;
+  			address = data.response.venues[0].location.address;
   			
-
-  		}).fail(function(){
+  				infowindow.setContent('<div>' + 'Name :' + name + '/' + marker.title + '<br>' + ' Address : ' + address + '</div>');
+          		infowindow.open(map, marker); 			
+})
+  		.fail (function(){
   			alert("Error failed to generate API");
   		})
-          
-          
-          infowindow.setContent('<div>' + 'Name :' + marker.title + '<br>' + '</div>');
-          infowindow.open(map, marker);
+  			
+         
           // Make sure the marker property is cleared if the infowindow is closed.
           infowindow.addListener('closeclick', function() {
             infowindow.marker = null;
@@ -96,34 +101,29 @@
     
     this.filteredLocations = ko.computed(function(){
      // console.log(this.input);
-      if (this.input() == "")
-      return this.locations();
-
-    else {
-      var word = this.input().toLowerCase();
-      for (var i = 0; i < locations.length; i++) {
-        var locationTitle = this.locations()[i].title.toLowerCase();
-        
-
-
-        if (locationTitle.includes(word)){
-            this.markers.google.maps.Animation.BOUNCE;
-
-              return this.locations()[i];
+     var filter = this.input().toLowerCase();
+        if (!filter) {
+            return this.locations();
+        } else {
+            return ko.utils.arrayFilter(this.locations(), function(locations){
+                return locations.title.toLowerCase().indexOf(filter) != -1;
+            });
         }
-
-      }
-          }
-
-        },this);
-    this.markerClicked = function (location){
-      console.log(location);
-      this.google.maps.event.trigger(location.markers, "click");
+    }, this);
+    this.markerClicked = function (marker){
+      console.log(marker);
+      this.google.maps.event.trigger(locations.marker, "click");
 
     };
   
     };
    
+ // function forSquare (marker , infowindow){
+   			
+          
+          
+  	
+//  }
 
 
  
