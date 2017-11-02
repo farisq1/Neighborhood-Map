@@ -30,7 +30,7 @@
             position: position,
             id: locations[i].id,
             title: title,
-            animation: google.maps.Animation.DROP,
+            animation: google.maps.Animation.DROP
         
             
           });
@@ -40,14 +40,17 @@
           markers.push(marker);
 
          //locations[i].location = marker;
-           marker.addListener('click', function() {
-            populateInfoWindow(this, largeInfowindow);
-            this.setAnimation(google.maps.Animation.BOUNCE);
+           marker.addListener('click', addListener);
             
-          });
+          
           
 
           
+              }
+              function addListener () {
+              	populateInfoWindow(this, largeInfowindow);
+              	            this.setAnimation(google.maps.Animation.BOUNCE);
+
               }
         }
         
