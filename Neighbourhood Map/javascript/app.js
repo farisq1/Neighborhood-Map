@@ -62,6 +62,7 @@ function initMap() {
             position: position,
             id: locations[i].id,
             title: title,
+            visible: true,
             animation: google.maps.Animation.DROP
 
 
@@ -83,6 +84,7 @@ function initMap() {
         populateInfoWindow(this, largeInfowindow);
         this.setAnimation(google.maps.Animation.BOUNCE);
         bounceTimer(this, marker);
+
 
     }
 
@@ -142,14 +144,18 @@ function AppViewModel() {
     this.input = ko.observable("");
     this.locations = ko.observableArray(locations);
     this.title = ko.observable();
-    this.marker = ko.observableArray(markers);
-
+    this.marker = ko.observable();
+		
 
     this.filteredLocations = ko.computed(function() {
         // console.log(this.input);
         var filter = this.input().toLowerCase();
         if (!filter) {
-            return this.locations();
+        	 	for (var i = 0; i < markers.length; i++) {
+        	 		markers[i].setVisible(true);
+        	 	}
+        		return this.locations();
+
         } else {
             return ko.utils.arrayFilter(this.locations(), function(locations) {
                 locations.location.setVisible(locations.title.toLowerCase().indexOf(filter) != -1);
@@ -158,7 +164,7 @@ function AppViewModel() {
         }
     }, this);
     this.markerClicked = function(marker) {
-        // it's showing in the console.log but not on the map
+       
         console.log(google);
         console.log(locations, marker);
         google.maps.event.trigger(marker.location, "click");
