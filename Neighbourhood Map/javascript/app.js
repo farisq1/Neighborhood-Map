@@ -158,7 +158,7 @@
 
             };
 
-        };
+        }
 
 
         // function forSquare (marker , infowindow){
