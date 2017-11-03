@@ -1,39 +1,37 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Map</title>
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    
+<head>
+    <title>Map</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
 </head>
 
 <body>
-<div id="container">
-<div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <div > 
-    <input  placeholder ="Search" data-bind="value: input, valueUpdate: 'afterkeydown'" />
-  <ul data-bind="foreach: filteredLocations">
-    <il data-bind="text: title, click:$root.markerClicked">
-    </il>
-  </ul>
-</div>
- </div>
-<div id="map"></div>
-<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
-</div>
-
-</div>
-
-<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfHUmj4jn64EKUbmrePynhtadmwnxUbyw&v=3&callback=initMap">
-
-    </script>
-
+    <div id="container">
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <div>
+                <input placeholder="Search" data-bind="value: input, valueUpdate: 'afterkeydown'" />
+                <ul data-bind="foreach: filteredLocations">
+                    <il data-bind="text: title, click:$root.markerClicked">
+                    </il>
+                </ul>
+            </div>
+        </div>
+        <div id="map"></div>
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+    </div>
     <script src="javascript/jquery-3.2.1.js"></script>
     <script src="javascript/Knockout.js"></script>
-  <script src="javascript/app.js"></script>
+    <script src="javascript/app.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfHUmj4jn64EKUbmrePynhtadmwnxUbyw&v=3&callback=initMap" onerror="errorHandling()">
+    </script>
 
-  </body>
+
+
+</body>
+
 </html>
