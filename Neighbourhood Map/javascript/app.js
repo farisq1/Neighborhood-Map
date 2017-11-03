@@ -155,7 +155,6 @@
                 if (!filter) {
 
                     return this.locations();
-                    return this.locations.location();
                 } else {
                     return ko.utils.arrayFilter(this.locations(), function(locations) {
                         locations.location.setVisible(locations.title.toLowerCase().indexOf(filter) != -1);
