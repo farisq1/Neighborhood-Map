@@ -76,7 +76,7 @@
 
                 markers.push(marker);
 
-                //locations[i].location = marker;
+                locations[i].location = marker;
                 marker.addListener('click', addListener);
 
 
@@ -87,7 +87,14 @@
             function addListener() {
                 populateInfoWindow(this, largeInfowindow);
                 this.setAnimation(google.maps.Animation.BOUNCE);
+                bounceTimer(this, marker);
 
+            }
+
+            function bounceTimer(marker) {
+                setTimeout(function() {
+                    marker.setAnimation(null);
+                }, 700);
             }
         }
 
@@ -113,8 +120,10 @@
 
                     .done(function(data) {
                         console.log(data);
-                        name = data.response.venues[0].name;
-                        address = data.response.venues[0].location.address;
+                        address = data.response.venues[0].location.address || 'No address provided';
+                        name = data.response.venues[0].name || 'No name provided';
+                        // name = data.response.venues[0].name;
+                        // address = data.response.venues[0].location.address;
 
                         infowindow.setContent('<div>' + 'Name :' + name + '/' + marker.title + '<br>' + ' Address : ' + address + '</div>');
                         infowindow.open(map, marker);
@@ -144,17 +153,22 @@
                 // console.log(this.input);
                 var filter = this.input().toLowerCase();
                 if (!filter) {
+
                     return this.locations();
+                    return this.locations.location();
                 } else {
                     return ko.utils.arrayFilter(this.locations(), function(locations) {
+                        locations.location.setVisible(locations.title.toLowerCase().indexOf(filter) != -1);
                         return locations.title.toLowerCase().indexOf(filter) != -1;
                     });
                 }
             }, this);
             this.markerClicked = function(marker) {
                 // it's showing in the console.log but not on the map
-                console.log(marker);
-                this.google.maps.event.trigger(locations.marker, "click");
+                console.log(google);
+                console.log(locations, marker);
+                google.maps.event.trigger(marker.location, "click");
+
 
             };
 
